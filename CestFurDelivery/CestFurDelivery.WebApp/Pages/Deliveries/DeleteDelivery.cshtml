@@ -1,0 +1,74 @@
+﻿@page "{Id}"
+@model CestFurDelivery.WebApp.Pages.Deliveries.DeleteDeliveryModel
+@{
+}
+<h1 class="text-center">Delete selected delivery</h1>
+<hr />
+<div class="container">
+	<form method="post">
+	<div class="row justify-content-center">
+		<div class="col-4">
+			<div class="form-group">
+				<label asp-for="Delivery.Date"></label>
+				<input asp-for="Delivery.Date" class="form-control" readonly>
+			</div>
+
+			<div class="form-group mt-2">
+				<label asp-for="Delivery.TimeStart"></label>
+				<input asp-for="Delivery.TimeStart" class="form-control" readonly>
+			</div>
+
+			<div class="form-group mt-2">
+				<label asp-for="Delivery.TimeEnd"></label>
+				<input asp-for="Delivery.TimeEnd" class="form-control" readonly>
+			</div>
+
+			<div class="form-group mt-2">
+				<label asp-for="Delivery.ClientSurname"></label>
+				<input asp-for="Delivery.ClientSurname" class="form-control" readonly>
+			</div>
+
+			<div class="form-group mt-2">
+				<label asp-for="Delivery.ClientName"></label>
+				<input asp-for="Delivery.ClientName" class="form-control" readonly>
+			</div>
+
+		</div>
+		<div class="col-4">
+			
+			<div class="form-group">
+				<label asp-for="Delivery.City"></label>
+				<input asp-for="Delivery.City" class="form-control" readonly>
+			</div>
+
+			<div class="form-group mt-2">
+				<label asp-for="Delivery.IdDeliveryState"></label>
+				<select asp-for="Delivery.IdDeliveryState" class="form-control" readonly>
+					<option value=@Model.DeliveryState.Id>@Html.Raw(Model.DeliveryState.Icon) - @Model.DeliveryState.State</option>
+				</select>
+			</div>
+
+			<div class="form-group mt-2">
+				<label asp-for="Delivery.Team"></label>
+				<select asp-for="Delivery.Team" class="form-control" readonly>
+					<option value=@Model.Team.Id>@Model.Team.Name</option>
+				</select>
+			</div>
+
+			<div class="form-group mt-2">
+				<label asp-for="Delivery.Furniture"></label>
+				<textarea asp-for="Delivery.Furniture" class="form-control" readonly></textarea>
+			</div>
+
+		</div>
+		<div class="row justify-content-center mt-5">
+			<div class="col-4">
+				<a type="button" class="btn btn-primary w-100 btn-lg text-uppercase" asp-page="../Index" asp-route-InputDate=@Model.Delivery.Date.ToString("dd-MM-yyyy")>&#11013;Home</a>
+			</div>
+			<div class="col-4">
+				<button type="submit" class="btn btn-danger w-100 btn-lg text-uppercase">Delete&#128465;</button>
+			</div>
+		</div>
+	</div>
+	</form>
+</div>

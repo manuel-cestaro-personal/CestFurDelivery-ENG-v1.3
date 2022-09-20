@@ -1,0 +1,118 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="container">
+    <div class="row d-flex justify-content-center mb-4">
+        <div class="col-1 align-self-center text-center">
+            <form method="post">
+                <div class="form-group">
+				    <input type="hidden"  asp-for="BaseDay" value="@Model.BaseDay"/>
+                    <button type="submit" class="btn btn-outline-primary" name="submitButton" value="Prev">&#11013;</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-2 align-self-center text-center">
+            <span>@Model.ViewList.First().Day.ToString("dd/MM/yyyy") - @Model.ViewList.Last().Day.ToString("dd/MM/yyyy")</span>
+        </div>
+        <div class="col-1 align-self-center text-center">
+            <form method="post">
+                <div class="form-group">
+				    <input type="hidden"  asp-for="BaseDay" value="@Model.BaseDay"/>
+                    <button type="submit" class="btn btn-outline-primary" name="submitButton" value="Next">&#10145;</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @foreach (var view in Model.ViewList)
+    {
+        <div class="mb-4">
+            <div class="row justify-content-center border-bottom box-shadow">
+                @* add day as title *@
+                <div class="col-10">
+                    <h3>@view.Day.ToString("dd/MM/yyyy")</h3>
+                </div>
+                <div class="col-2">
+                    <a type="button" class="btn btn-outline-success w-100" asp-page="Deliveries/InsertDeliveryDate" asp-route-Date=@view.Day.ToString("dd-MM-yyyy")>&#10133; Insert</a>
+                </div>
+            </div>
+            @if (view.DeliveriesByDay != null && view.DeliveriesByDay.Any())
+            {
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        @* add table legend *@
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Start</th>
+                                    <th scope="col">End</th>
+                                    <th scope="col">Surname</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">City</th>
+                                    <th scope="col">Furniture</th>
+                                    <th scope="col">Team</th>
+                                    <th scope="col">State</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var delivery in view.DeliveriesByDay)
+                                {
+                                    @* add table row *@
+                                    <tr>
+                                        <td>@delivery.Delivery.TimeStart.ToString("hh':'mm")</td>
+                                        <td>@delivery.Delivery.TimeEnd.ToString("hh':'mm")</td>
+                                        <td>@delivery.Delivery.ClientSurname</td>
+                                        <td>@delivery.Delivery.ClientName</td>
+                                        <td>@delivery.Delivery.City</td>
+                                        <td>@delivery.Delivery.Furniture</td>
+                                        <td>@delivery.Team.Name</td>
+                                        <td>@Html.Raw(delivery.DeliveryState.Icon)</td>
+                                        <td><a type="button" class="btn btn-outline-primary" asp-page="Deliveries/DetailDelivery" asp-route-Id=@delivery.Delivery.Id.ToString()>&#128194;</a></td>
+                                        <td><a type="button" class="btn btn-outline-warning" asp-page="Deliveries/UpdateDelivery" asp-route-Id=@delivery.Delivery.Id.ToString()>&#128221;</a></td>
+                                        <td><a type="button" class="btn btn-outline-danger" asp-page="Deliveries/DeleteDelivery" asp-route-Id=@delivery.Delivery.Id.ToString()>&#128465;</a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+            <div class="row justify-content-center">
+                @if (view.TiemCheck)
+                {
+                    <span class="text-danger">&#9888; Possible conflict between start or end times.</span>
+                }
+            </div>
+        </div>
+    }
+
+<div class="container">
+    <div class="row d-flex justify-content-center mb-4">
+        <div class="col-1 align-self-center text-center">
+            <form method="post">
+                <div class="form-group">
+				    <input type="hidden"  asp-for="BaseDay" value="@Model.BaseDay"/>
+                    <button type="submit" class="btn btn-outline-primary" name="submitButton" value="Prev">&#11013;</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-2 align-self-center text-center">
+            <span>@Model.ViewList.First().Day.ToString("dd/MM/yyyy") - @Model.ViewList.Last().Day.ToString("dd/MM/yyyy")</span>
+        </div>
+        <div class="col-1 align-self-center text-center">
+            <form method="post">
+                <div class="form-group">
+				    <input type="hidden"  asp-for="BaseDay" value="@Model.BaseDay"/>
+                    <button type="submit" class="btn btn-outline-primary" name="submitButton" value="Next">&#10145;</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

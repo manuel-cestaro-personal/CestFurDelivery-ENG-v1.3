@@ -1,0 +1,123 @@
+﻿@page "{Date}"
+@model CestFurDelivery.WebApp.Pages.Deliveries.InsertDeliveryDateModel
+@{
+}
+<h1 class="text-center">Insert a new delivery</h1>
+<hr />
+<div class="container">
+	<form method="post">
+	<div class="row justify-content-center">
+		<div class="col-4">
+			<div class="form-group">
+				<label asp-for="Delivery.Date"></label>
+				<input asp-for="Delivery.Date" class="form-control"> 
+				<span class="text-danger" asp-validation-for="Delivery.Date"></span>
+			</div>
+
+			<div class="form-group mt-2">
+				<label asp-for="Delivery.TimeStart"></label>
+				<input asp-for="Delivery.TimeStart" class="form-control">
+				<span class="text-danger" asp-validation-for="Delivery.TimeStart"></span>
+			</div>
+
+			<div class="form-group mt-2">
+				<label asp-for="Delivery.TimeEnd"></label>
+				<input asp-for="Delivery.TimeEnd" class="form-control">
+				<span class="text-danger" asp-validation-for="Delivery.TimeEnd"></span>
+				@if (Model.CheckTimes)
+				{
+					<span class="text-danger">The end time must be greater than the start tiem</span>
+				}
+			</div>
+
+			<div class="form-group mt-2">
+				<label asp-for="Delivery.ClientSurname"></label>
+				<input asp-for="Delivery.ClientSurname" class="form-control">
+				<span class="text-danger" asp-validation-for="Delivery.ClientSurname"></span>
+			</div>
+
+			<div class="form-group mt-2">
+				<label asp-for="Delivery.ClientName"></label>
+				<input asp-for="Delivery.ClientName" class="form-control"> 
+				<span class="text-danger" asp-validation-for="Delivery.ClientName"></span>
+			</div>
+
+			<div class="form-group mt-2">
+				<label asp-for="Delivery.Furniture"></label>
+				<textarea asp-for="Delivery.Furniture" class="form-control"></textarea>
+				<span class="text-danger" asp-validation-for="Delivery.Furniture"></span>
+			</div>
+
+		</div>
+		<div class="col-4">
+			
+			<div class="form-group">
+				<label asp-for="Delivery.City"></label>
+				<input asp-for="Delivery.City" class="form-control"> 
+				<span class="text-danger" asp-validation-for="Delivery.City"></span>
+			</div>
+
+			<div class="form-group mt-2">
+				<label asp-for="Delivery.Team"></label>
+				<select asp-for="Delivery.Team" class="form-control">
+					@foreach (var team in Model.TeamList)
+					{
+						<option value=@team.Id>@team.Name</option>
+					}
+				</select>
+				<span class="text-danger" asp-validation-for="Delivery.Team"></span>
+			</div>
+
+			<div class="form-group mt-2">
+				<label asp-for="Delivery.Vehicle1"></label>
+				<select asp-for="Delivery.Vehicle1" class="form-control">
+					<option value="">---</option>
+					@foreach (var vehicle in Model.VehicleList)
+					{
+						<option value=@vehicle.Id>@vehicle.VehicleName</option>
+					}
+				</select>
+				<span class="text-danger" asp-validation-for="Delivery.Vehicle1"></span>
+			</div>
+
+			<div class="form-group mt-2">
+				<label asp-for="Delivery.Vehicle2"></label>
+				<select asp-for="Delivery.Vehicle2" class="form-control">
+					<option value="">---</option>
+					@foreach (var vehicle in Model.VehicleList)
+					{
+						<option value=@vehicle.Id>@vehicle.VehicleName</option>
+					}
+				</select>
+				<span class="text-danger" asp-validation-for="Delivery.Vehicle2"></span>
+			</div>
+
+			<div class="form-group mt-2">
+				<label asp-for="Delivery.Vehicle3"></label>
+				<select asp-for="Delivery.Vehicle3" class="form-control">
+					<option value="">---</option>
+					@foreach (var vehicle in Model.VehicleList)
+					{
+						<option value=@vehicle.Id>@vehicle.VehicleName</option>
+					}
+				</select>
+				<span class="text-danger" asp-validation-for="Delivery.Vehicle3"></span>
+			</div>
+
+			<div class="form-group mt-2">
+				<label asp-for="Delivery.Note"></label>
+				<textarea asp-for="Delivery.Note" class="form-control"></textarea>
+				<span class="text-danger" asp-validation-for="Delivery.Note"></span>
+			</div>
+		</div>
+		<div class="row justify-content-center mt-3">
+			<div class="col-4">
+				<a type="button" class="btn btn-primary w-100 btn-lg text-uppercase" asp-page="../Index" asp-route-InputDate=@Model.Delivery.Date.ToString("dd-MM-yyyy")>&#11013;Home</a>
+			</div>
+			<div class="col-4">
+				<button type="submit" class="btn btn-success w-100 btn-lg text-uppercase">Save&#128230;</button>
+			</div>
+		</div>
+	</div>
+	</form>
+</div>

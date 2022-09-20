@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+
+  delivery.webapp:
+    image: cestfurdelivery.eng:v1.3
+    container_name: CestFurDelivery
+    restart: unless-stopped
+    ports:
+      - 8080:80
+    environment:
+      TZ: "Europe/Rome"
+    networks:
+      - <Your_Network_Name> #edit with your network
+
+networks:
+  <Your_Network_Name>: #edit with your network
+    external: true
