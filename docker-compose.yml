@@ -2,7 +2,7 @@ version: "3.7"
 services:
 
   delivery.webapp:
-    image: cestfurdelivery.eng:v1.3
+    image: cestfurdelivery.eng:1.2.0
     container_name: CestFurDelivery
     restart: unless-stopped
     ports:
