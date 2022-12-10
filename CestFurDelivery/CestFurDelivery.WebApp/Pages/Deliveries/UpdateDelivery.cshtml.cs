@@ -36,12 +36,14 @@ namespace CestFurDelivery.WebApp.Pages.Deliveries
         public IEnumerable<Vehicle> VehicleList { get; set; }
         public IEnumerable<DeliveryState> DeliveryStateList { get; set; }
         public bool CheckTimes { get; set; }
+        public bool CheckDate { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string Id)
         {
             try
             {
                 CheckTimes = false;
+				CheckDate = false;
                 DeliveryStateList = await _deliveryStateService.GetAll(User.Identity.Name);
                 VehicleList = await _vehicleService.GetAll(User.Identity.Name);
                 TeamList = await _teamService.GetAll(User.Identity.Name);
@@ -61,34 +63,42 @@ namespace CestFurDelivery.WebApp.Pages.Deliveries
             try
             {
                 CheckTimes = false;
+				CheckDate = false;
                 Delivery.Id = Guid.Parse(Id);
                 if (ModelState.IsValid)
                 {
-                    if (TimeSpan.Compare(Delivery.TimeStart, Delivery.TimeEnd) == -1)
+                    if (Delivery.Date.DayOfWeek != DayOfWeek.Sunday)
                     {
-                        bool check1 = await _deliveryStateService.CheckInstance(Delivery.IdDeliveryState, User.Identity.Name);
-                        bool check2 = await _vehicleService.CheckInstance(Delivery.Vehicle1, User.Identity.Name);
-                        bool check3 = true;
-                        bool check4 = true;
-                        if (Delivery.Vehicle2 != null)
+                        if (TimeSpan.Compare(Delivery.TimeStart, Delivery.TimeEnd) == -1)
                         {
-                            check3 = await _vehicleService.CheckInstance((Guid)Delivery.Vehicle2, User.Identity.Name);
+                            bool check1 = await _deliveryStateService.CheckInstance(Delivery.IdDeliveryState, User.Identity.Name);
+                            bool check2 = await _vehicleService.CheckInstance(Delivery.Vehicle1, User.Identity.Name);
+                            bool check3 = true;
+                            bool check4 = true;
+                            if (Delivery.Vehicle2 != null)
+                            {
+                                check3 = await _vehicleService.CheckInstance((Guid)Delivery.Vehicle2, User.Identity.Name);
+                            }
+                            if (Delivery.Vehicle3 != null)
+                            {
+                                check4 = await _vehicleService.CheckInstance((Guid)Delivery.Vehicle3, User.Identity.Name);
+                            }
+                            bool check5 = await _teamService.CheckInstance(Delivery.Team, User.Identity.Name);
+                            if (check1 && check2 && check3 && check4 && check5)
+                            {
+                                await _deliveryService.Update(Delivery, User.Identity.Name);
+                                return RedirectToPage("/Index", new { InputDate = Delivery.Date.ToString("dd-MM-yyyy") });
+                            }
+                            return RedirectToPage();
                         }
-                        if (Delivery.Vehicle3 != null)
+                        else
                         {
-                            check4 = await _vehicleService.CheckInstance((Guid)Delivery.Vehicle3, User.Identity.Name);
+                            CheckTimes = true;
                         }
-                        bool check5 = await _teamService.CheckInstance(Delivery.Team, User.Identity.Name);
-                        if (check1 && check2 && check3 && check4 && check5)
-                        {
-                            await _deliveryService.Update(Delivery, User.Identity.Name);
-                            return RedirectToPage("/Index", new { InputDate = Delivery.Date.ToString("dd-MM-yyyy") });
-                        }
-                        return RedirectToPage();
                     }
                     else
                     {
-                        CheckTimes = true;
+                        CheckDate = false;
                     }
                 }
 

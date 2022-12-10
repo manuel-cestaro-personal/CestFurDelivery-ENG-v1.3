@@ -1,0 +1,54 @@
+﻿@page
+@model CestFurDelivery.WebApp.Pages.Teams.ShowTeamsModel
+@{
+}
+
+<div class="container">
+
+    <div class="row justify-content-center">
+        <div class="row justify-content-center border-bottom box-shadow">
+            @* add title *@
+            <div class="col-6">
+                <h2>TEAMS</h2>
+            </div>
+            <div class="col-2">
+                <a type="button" class="btn btn-outline-success w-100" asp-page="/Teams/InsertTeam">&#10133; Insert</a>
+            </div>
+        </div>
+        <div class="col-8">
+            @* add table legend *@
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Is active?</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var team in Model.Teams)
+                    {
+                        @* add table row *@
+                        <tr>
+                            <td>@team.Name</td>
+                            <td>@team.Description</td>
+                            @if ((bool)team.IsActive)
+                            {
+                                <td>YES</td>
+                            }
+                            else
+                            {
+                                <td>NO</td>
+                            }
+                            <td><a type="button" class="btn btn-outline-secondary" asp-page="/Teams/ChangeStatusTeam" asp-route-Id=@team.Id.ToString()>&#11088;</a></td>
+                            <td><a type="button" class="btn btn-outline-warning" asp-page="/Teams/UpdateTeams" asp-route-Id=@team.Id.ToString()>&#128221;</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

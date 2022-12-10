@@ -60,7 +60,7 @@ namespace CestFurDelivery.WebApp.Pages.Deliveries
             }
             catch (Exception ex)
             {
-                _logger.LogError($"{DateTime.Now} - UpdateDelivery - {User.Identity.Name} - Error: {ex.Message}");
+                _logger.LogError($"{DateTime.Now} - DetailDelivery - {User.Identity.Name} - Error: {ex.Message}");
                 return RedirectToPage("/Index");
             }
         }

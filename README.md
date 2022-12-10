@@ -13,7 +13,7 @@ The web app pages mainly expose CRUD and Search operations of the delivery table
 - ask me for a database&#128517;<br>
 - `nano ~/CestFurDelivery/CestFurDelivery/CestFurDelivery.WebApp/appsettings.json` --> add connection string to the config file<br>
 - `cd ~/CestFurDelivery/CestFurDelivery/`<br>
-- `docker build -t cestfurdelivery.eng:v1.3 -f ./CestFurDelivery.WebApp/Dockerfile .` --> create the docker image<br>
+- `docker build -t cestfurdelivery:1.2.0 -f ./CestFurDelivery.WebApp/Dockerfile .` --> create the docker image<br>
 - `cd ..`<br>
 - `docker network create <Your_Network_Name>` --> create your docker network<br>
 - `nano docker-compose.yml` --> edit the file with `<Your_Network_Name>`<br>

@@ -3,10 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - CestFurDelivery.WebApp</title>
+    <title>@ViewData["Title"] CestFurDelivery</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CestFurDelivery.WebApp.styles.css" asp-append-version="true" />
+    <link rel="shortcut icon" href="~/5445397.ico">
 </head>
 <body>
     <header>
@@ -34,6 +35,9 @@
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Teams/ShowTeams">Teams</a>
                                 </li>
                             }
                         </ul>

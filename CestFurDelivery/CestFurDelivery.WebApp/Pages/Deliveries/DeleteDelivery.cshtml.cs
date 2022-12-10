@@ -45,7 +45,7 @@ namespace CestFurDelivery.WebApp.Pages.Deliveries
             }
             catch (Exception ex)
             {
-                _logger.LogError($"{DateTime.Now} - UpdateDelivery - {User.Identity.Name} - Error: {ex.Message}");
+                _logger.LogError($"{DateTime.Now} - DeleteDelivery - {User.Identity.Name} - Error: {ex.Message}");
                 return RedirectToPage("/Index");
             }
         }
@@ -67,7 +67,7 @@ namespace CestFurDelivery.WebApp.Pages.Deliveries
             }
             catch (Exception ex)
             {
-                _logger.LogError($"{DateTime.Now} - UpdateDelivery - {User.Identity.Name} - Error: {ex.Message}");
+                _logger.LogError($"{DateTime.Now} - DeleteDelivery - {User.Identity.Name} - Error: {ex.Message}");
                 return RedirectToPage("/Index");
             }
         }

@@ -36,12 +36,14 @@ namespace CestFurDelivery.WebApp.Pages.Deliveries
         public IEnumerable<Vehicle> VehicleList { get; set; }
         public IEnumerable<DeliveryState> DeliveryStateList { get; set; }
         public bool CheckTimes { get; set; }
+        public bool CheckDate { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
             try
             {
                 CheckTimes = false;
+                CheckDate = false;
                 Delivery = new Delivery();
                 Delivery.Date = DateTime.Now;
                 DeliveryStateList = await _deliveryStateService.GetAll(User.Identity.Name);
@@ -51,7 +53,7 @@ namespace CestFurDelivery.WebApp.Pages.Deliveries
             }
             catch (Exception ex)
             {
-                _logger.LogError($"{DateTime.Now} - DeliveryService - {User.Identity.Name} - Error: {ex.Message}");
+                _logger.LogError($"{DateTime.Now} - InsertDelivery - {User.Identity.Name} - Error: {ex.Message}");
                 return RedirectToPage("/Index");
             }
         }
@@ -61,35 +63,43 @@ namespace CestFurDelivery.WebApp.Pages.Deliveries
             try
             {
                 CheckTimes = false;
+                CheckDate = false;
                 Delivery.IdDeliveryState = Guid.Parse("E58F06B1-01BC-41DE-AB90-39C3B3EFADDA");
                 if (ModelState.IsValid)
                 {
-                    if (TimeSpan.Compare(Delivery.TimeStart, Delivery.TimeEnd) == -1)
+                    if (Delivery.Date.DayOfWeek != DayOfWeek.Sunday)
                     {
-                        bool check1 = await _deliveryStateService.CheckInstance(Delivery.IdDeliveryState, User.Identity.Name);
-                        bool check2 = await _vehicleService.CheckInstance(Delivery.Vehicle1, User.Identity.Name);
-                        bool check3 = true;
-                        bool check4 = true;
-                        if (Delivery.Vehicle2 != null)
+                        if (TimeSpan.Compare(Delivery.TimeStart, Delivery.TimeEnd) == -1)
                         {
-                            check3 = await _vehicleService.CheckInstance((Guid)Delivery.Vehicle2, User.Identity.Name);
-                        }
-                        if (Delivery.Vehicle3 != null)
-                        {
-                            check4 = await _vehicleService.CheckInstance((Guid)Delivery.Vehicle3, User.Identity.Name);
-                        }
-                        bool check5 = await _teamService.CheckInstance(Delivery.Team, User.Identity.Name);
-                        if (check1 && check2 && check3 && check4 && check5)
-                        {
-                            Delivery.Id = Guid.NewGuid();
-                            await _deliveryService.Insert(Delivery, User.Identity.Name);
+                            bool check1 = await _deliveryStateService.CheckInstance(Delivery.IdDeliveryState, User.Identity.Name);
+                            bool check2 = await _vehicleService.CheckInstance(Delivery.Vehicle1, User.Identity.Name);
+                            bool check3 = true;
+                            bool check4 = true;
+                            if (Delivery.Vehicle2 != null)
+                            {
+                                check3 = await _vehicleService.CheckInstance((Guid)Delivery.Vehicle2, User.Identity.Name);
+                            }
+                            if (Delivery.Vehicle3 != null)
+                            {
+                                check4 = await _vehicleService.CheckInstance((Guid)Delivery.Vehicle3, User.Identity.Name);
+                            }
+                            bool check5 = await _teamService.CheckInstance(Delivery.Team, User.Identity.Name);
+                            if (check1 && check2 && check3 && check4 && check5)
+                            {
+                                Delivery.Id = Guid.NewGuid();
+                                await _deliveryService.Insert(Delivery, User.Identity.Name);
+                                return RedirectToPage();
+                            }
                             return RedirectToPage();
                         }
-                        return RedirectToPage();
+                        else
+                        {
+                            CheckTimes = true;
+                        }
                     }
                     else
                     {
-                        CheckTimes = true;
+                        CheckDate = true;
                     }
                 }
 
@@ -100,7 +110,7 @@ namespace CestFurDelivery.WebApp.Pages.Deliveries
             }
             catch (Exception ex)
             {
-                _logger.LogError($"{DateTime.Now} - DeliveryService - {User.Identity.Name} - Error: {ex.Message}");
+                _logger.LogError($"{DateTime.Now} - InsertDelivery - {User.Identity.Name} - Error: {ex.Message}");
                 throw;
             }
         }

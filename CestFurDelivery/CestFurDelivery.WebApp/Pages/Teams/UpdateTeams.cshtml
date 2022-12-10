@@ -1,0 +1,36 @@
+﻿@page "{Id}"
+@model CestFurDelivery.WebApp.Pages.Teams.UpdateTeamsModel
+@{
+}
+<h1 class="text-center">Update selected team</h1>
+<hr />
+<div class="container">
+	<form method="post">
+	<div class="row justify-content-center mt-4">
+		<div class="col-4">
+			<div class="form-group mt-2">
+				<label asp-for="Team.Name"></label>
+				<input asp-for="Team.Name" class="form-control">
+				<span class="text-danger" asp-validation-for="Team.Name"></span>
+			</div>
+			<div class="form-group mt-2">
+				<label asp-for="Team.Description"></label>
+				<textarea asp-for="Team.Description" class="form-control"></textarea>
+				<span class="text-danger" asp-validation-for="Team.Description"></span>
+			</div>
+
+			<div class="mt-5">
+				<button type="submit" class="btn btn-warning w-100 btn-lg text-uppercase">Update&#128221;</button>
+			</div>
+			<div class="mt-3">
+				<a type="button" class="btn btn-primary w-100 btn-lg text-uppercase" asp-page="/Teams/ShowTeams">&#11013;Teams</a>
+			</div>
+		</div>
+	</div>
+	</form>
+</div>
+
+
+@section scripts{
+	@*<partial name="_ValidationScriptsPartial" />*@
+}

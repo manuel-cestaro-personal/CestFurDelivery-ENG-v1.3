@@ -36,6 +36,7 @@ builder.Services.AddSingleton<ITeamService, TeamService>();
 builder.Services.AddSingleton<IVehicleService, VehicleService>();
 builder.Services.AddSingleton<IWeekService, WeekService>();
 builder.Services.AddSingleton<IViewService, ViewService>();
+builder.Services.AddSingleton<IChangeStatusService, ChangeStatusService>();
 
 var app = builder.Build();
 
